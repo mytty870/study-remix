@@ -13,6 +13,7 @@ import {
   json,
   redirect,
   useLoaderData,
+  useNavigation,
 } from "@remix-run/react";
 import { ContactRecord, getContacts, createEmptyContact } from "./data";
 
@@ -33,6 +34,8 @@ export const loader = async () => {
 
 export default function App() {
   const { contacts } = useLoaderData<typeof loader>()
+
+  const navigation = useNavigation()
 
   return (
     <html lang="en">
@@ -92,7 +95,12 @@ export default function App() {
             </ul>
           </nav>
         </div>
-        <div id="sidebar">
+        <div
+          className={
+            navigation.state === 'loading' ? 'loading' : ''
+          }
+          id="detail"
+        >
           <Outlet />
         </div>
 
